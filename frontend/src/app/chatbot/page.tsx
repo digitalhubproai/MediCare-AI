@@ -425,8 +425,9 @@ export default function ChatbotPage() {
         
         if (extractedText.trim()) {
           // Analyze the medical report
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
           try {
-            const analysisResponse = await fetch("http://localhost:8000/api/analyze-report", {
+            const analysisResponse = await fetch(`${apiUrl}/api/analyze-report`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -534,7 +535,8 @@ export default function ChatbotPage() {
 
   // Helper function to call chat API
   const callChatAPI = async (prevMessages: Message[], newMessage: string, userId: string): Promise<string> => {
-    const response = await fetch("http://localhost:8000/api/chat", {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+    const response = await fetch(`${apiUrl}/api/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

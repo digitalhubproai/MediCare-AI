@@ -1105,7 +1105,8 @@ This helps me provide safer guidance for you.`,
       const apiMessages = messages.map(m => ({ role: m.role, content: m.content }))
       apiMessages.push({ role: "user", content: messageContent })
 
-      const response = await fetch("http://localhost:8000/api/chat", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -25,8 +25,6 @@ export default function RootLayout({
       <body className={`${jakarta.variable} font-sans antialiased bg-white text-slate-900 min-h-screen selection:bg-blue-100 selection:text-blue-900`}>
         {/* Subtle gradient background */}
         <div className="fixed inset-0 bg-gradient-to-br from-blue-50/30 via-white to-cyan-50/30 z-[-1] pointer-events-none" />
-        {/* Subtle noise texture */}
-        <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] z-[-1] pointer-events-none" />
         <Providers>
           <AuthProvider>{children}</AuthProvider>
         </Providers>
