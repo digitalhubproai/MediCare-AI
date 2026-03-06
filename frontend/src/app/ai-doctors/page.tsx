@@ -270,33 +270,11 @@ function AIDoctorsContent() {
   const [speechSynth, setSpeechSynth] = useState<SpeechSynthesis | null>(null)
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
 
-  // Auto-connect if coming from chatbot/report
-  useEffect(() => {
-    const symptom = searchParams.get("symptom")
-    const fromReport = searchParams.get("fromReport")
-    
-    if (symptom || fromReport) {
-      const specialty = detectSpecialty(symptom || "")
-      const doctor = getDoctorById(specialty)
-      connectToDoctor(doctor, symptom || "Report analysis follow-up")
-    }
-  }, [searchParams])
+  console.log('AIDoctorsContent rendered, showDoctorSelection:', showDoctorSelection, 'aiDoctors count:', aiDoctors.length)
 
   useEffect(() => {
     scrollToBottom()
   }, [messages])
-
-  useEffect(() => {
-    if (showDoctorSelection) {
-      animate('.doctor-card', {
-        opacity: [0, 1],
-        scale: [0.95, 1],
-        delay: stagger(80, { start: 100 }),
-        duration: 400,
-        ease: 'easeOutExpo'
-      })
-    }
-  }, [showDoctorSelection])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -619,16 +597,19 @@ This helps me provide safer guidance for you.`,
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {aiDoctors.map((doctor) => (
+            {aiDoctors.length === 0 && <p className="text-red-500">No doctors found!</p>}
+            {aiDoctors.map((doctor, index) => (
               <motion.div
                 key={doctor.id}
+                className="doctor-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group overflow-hidden relative"
                 initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
                 whileHover={{ y: -8, scale: 1.02, boxShadow: "0 20px 60px -10px rgba(59, 130, 246, 0.3)" }}
                 whileTap={{ scale: 0.98 }}
+                transition={{ delay: index * 0.1 }}
                 onClick={() => connectToDoctor(doctor)}
                 tabIndex={0}
                 onKeyDown={(e) => e.key === "Enter" && connectToDoctor(doctor)}
-                className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group overflow-hidden relative"
               >
                 {/* Gradient orb decoration */}
                 <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${doctor.gradient} opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity`} />
