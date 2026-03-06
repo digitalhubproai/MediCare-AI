@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import Loader from "@/components/Loader"
 import Logo from "@/components/Logo"
 import { useAuth } from "@/contexts/AuthContext"
@@ -12,10 +12,9 @@ import {
   FileCheck, UserCheck, BarChart3,
   Cpu, Lock, ArrowRight, CheckCircle, Zap, Award,
   ChevronRight, ChevronDown, Activity, Microscope, Thermometer,
-  TrendingUp, Calendar, Bell, Play, Mail, MapPin, Phone
+  TrendingUp, Calendar, Bell, Play, HelpCircle
 } from "lucide-react"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
-import { animate, stagger } from "animejs"
 
 export default function Home() {
   const { user, signOut, isAuthenticated } = useAuth()
@@ -26,31 +25,30 @@ export default function Home() {
 
   const { scrollYProgress } = useScroll()
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1])
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95])
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowLoader(false), 1500)
+    const timer = setTimeout(() => setShowLoader(false), 1000)
     return () => clearTimeout(timer)
   }, [])
 
+  // Optimized scroll handler with throttle
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener("scroll", handleScroll)
+    let ticking = false
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50)
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  useEffect(() => {
-    animate('.hero-feature', {
-      opacity: [0, 1],
-      translateY: [30, 0],
-      delay: stagger(150, { start: 200 }),
-      duration: 600,
-      ease: 'easeOutExpo'
-    })
-  }, [])
-
-  const features = [
+  // Memoized features data
+  const features = useMemo(() => [
     {
       icon: Brain,
       title: "AI Diagnostics",
@@ -78,16 +76,16 @@ export default function Home() {
     {
       icon: MessageCircle,
       title: "24/7 Support",
-      desc: "Round-the-clock AI assistance for all your health queries",
+      desc: "Round-the-clock AI assistance for all your queries",
       color: "pink"
     },
     {
       icon: BarChart3,
       title: "Health Tracking",
-      desc: "Monitor long-term health trends with detailed analytics and insights",
+      desc: "Monitor long-term health trends with detailed analytics",
       color: "cyan"
     },
-  ]
+  ], [])
 
   const colorConfig: Record<string, { gradient: string; bg: string; text: string; icon: string }> = {
     blue: { gradient: "from-blue-600 to-cyan-500", bg: "bg-blue-50", text: "text-blue-600", icon: "text-blue-600" },
@@ -194,7 +192,7 @@ export default function Home() {
               <Logo />
 
               <div className="hidden lg:flex items-center gap-8">
-                {["Features", "How It Works", "About", "Pricing", "Testimonials", "FAQ", "Contact"].map((item) => (
+                {["Features", "How It Works", "About", "Pricing", "Testimonials", "FAQ"].map((item) => (
                   <Link
                     key={item}
                     href={`#${item.toLowerCase().replace(' ', '-')}`}
@@ -955,14 +953,14 @@ export default function Home() {
                 className="text-center mt-12"
               >
                 <p className="text-slate-600 mb-4">Still have questions?</p>
-                <Link href="#contact">
+                <Link href="#faq">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/35 transition-all"
                   >
-                    <Mail className="w-4 h-4" />
-                    Contact Our Team
+                    <HelpCircle className="w-4 h-4" />
+                    View FAQ
                   </motion.button>
                 </Link>
               </motion.div>
@@ -1015,159 +1013,6 @@ export default function Home() {
           </section>
         </main>
 
-        {/* Contact Section */}
-        <section id="contact" className="py-24 bg-gradient-to-b from-white via-slate-50 to-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <motion.div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-6"
-                whileHover={{ scale: 1.05 }}
-              >
-                <Mail className="w-4 h-4 text-blue-600" />
-                <span className="text-xs font-semibold text-blue-700 uppercase">Contact Us</span>
-              </motion.div>
-              <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
-                Get In Touch
-              </h2>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-              </p>
-            </motion.div>
-
-            <div className="grid lg:grid-cols-2 gap-12">
-              {/* Contact Info */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="space-y-8"
-              >
-                <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 p-8 rounded-2xl text-white shadow-xl shadow-blue-500/25">
-                  <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-                  <div className="space-y-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <p className="font-semibold mb-1">Email Us</p>
-                        <p className="text-white/90">support@medicareai.com</p>
-                        <p className="text-white/90">info@medicareai.com</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <p className="font-semibold mb-1">Call Us</p>
-                        <p className="text-white/90">+1 (555) 123-4567</p>
-                        <p className="text-white/90">+1 (555) 987-6543</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <p className="font-semibold mb-1">Visit Us</p>
-                        <p className="text-white/90">123 Healthcare Avenue</p>
-                        <p className="text-white/90">San Francisco, CA 94102</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 pt-8 border-t border-white/20">
-                    <p className="font-semibold mb-4">Follow Us</p>
-                    <div className="flex gap-4">
-                      {["Facebook", "Twitter", "LinkedIn", "Instagram"].map((social) => (
-                        <motion.a
-                          key={social}
-                          href="#"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
-                        >
-                          <span className="sr-only">{social}</span>
-                          <div className="w-5 h-5 bg-white rounded-sm" />
-                        </motion.a>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Contact Form */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <form className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">First Name</label>
-                      <input
-                        type="text"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
-                        placeholder="John"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Last Name</label>
-                      <input
-                        type="text"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
-                        placeholder="Doe"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
-                    <input
-                      type="email"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Subject</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
-                      placeholder="How can we help?"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Message</label>
-                    <textarea
-                      rows={5}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all resize-none"
-                      placeholder="Your message..."
-                    />
-                  </div>
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/35 transition-all"
-                  >
-                    Send Message
-                  </motion.button>
-                </form>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
         {/* Footer */}
         <footer className="py-12 border-t border-slate-200 bg-white">
           <div className="max-w-7xl mx-auto px-6">
@@ -1186,25 +1031,23 @@ export default function Home() {
               <div>
                 <h4 className="font-semibold text-slate-900 mb-4">Product</h4>
                 <ul className="space-y-2 text-sm text-slate-600">
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">Features</Link></li>
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">Pricing</Link></li>
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">API</Link></li>
+                  <li><Link href="/features" className="hover:text-blue-600 transition-colors">Features</Link></li>
+                  <li><Link href="/pricing" className="hover:text-blue-600 transition-colors">Pricing</Link></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-slate-900 mb-4">Company</h4>
                 <ul className="space-y-2 text-sm text-slate-600">
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">About</Link></li>
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">Blog</Link></li>
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">Careers</Link></li>
+                  <li><Link href="/about" className="hover:text-blue-600 transition-colors">About</Link></li>
+                  <li><Link href="/careers" className="hover:text-blue-600 transition-colors">Careers</Link></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-slate-900 mb-4">Legal</h4>
                 <ul className="space-y-2 text-sm text-slate-600">
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">Privacy</Link></li>
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">Terms</Link></li>
-                  <li><Link href="#" className="hover:text-blue-600 transition-colors">Security</Link></li>
+                  <li><Link href="/privacy" className="hover:text-blue-600 transition-colors">Privacy</Link></li>
+                  <li><Link href="/terms" className="hover:text-blue-600 transition-colors">Terms</Link></li>
+                  <li><Link href="/security" className="hover:text-blue-600 transition-colors">Security</Link></li>
                 </ul>
               </div>
             </div>
@@ -1213,8 +1056,8 @@ export default function Home() {
                 © 2026 MediCare AI. All rights reserved.
               </p>
               <div className="flex items-center gap-6 text-sm text-slate-600">
-                <Link href="#" className="hover:text-slate-900 transition-colors">Privacy Policy</Link>
-                <Link href="#" className="hover:text-slate-900 transition-colors">Terms of Service</Link>
+                <Link href="/privacy" className="hover:text-slate-900 transition-colors">Privacy Policy</Link>
+                <Link href="/terms" className="hover:text-slate-900 transition-colors">Terms of Service</Link>
               </div>
             </div>
           </div>

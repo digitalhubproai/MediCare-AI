@@ -1,10 +1,9 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
-import { animate, stagger } from "animejs"
 import Logo from "@/components/Logo"
 import {
   Brain, FileText, Settings, LogOut, MessageCircle,
@@ -30,32 +29,26 @@ export default function DashboardPage() {
   const [medicationIndex, setMedicationIndex] = useState(0)
   const [medicationPlaying, setMedicationPlaying] = useState(false)
 
+  // Optimized time update
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
     return () => clearInterval(timer)
   }, [])
 
-  useEffect(() => {
-    animate('.dashboard-card', {
-      opacity: [0, 1],
-      translateY: [20, 0],
-      delay: stagger(80, { start: 100 }),
-      duration: 500,
-      ease: 'easeOutExpo'
-    })
-  }, [])
-
-  const getInitials = () => {
+  const getInitials = useCallback(() => {
     if (session?.user?.name) {
       const names = session.user.name.split(' ')
       return names.length >= 2 ? `${names[0][0]}${names[1][0]}`.toUpperCase() : session.user.name.slice(0, 2).toUpperCase()
     }
     return 'U'
-  }
+  }, [session?.user?.name])
 
-  const userName = session?.user?.name?.split(' ')[0] || 'User'
+  const userName = useMemo(() => 
+    session?.user?.name?.split(' ')[0] || 'User'
+  , [session?.user?.name])
 
-  const navItems = [
+  // Memoized static data to prevent re-renders
+  const navItems = useMemo(() => [
     { icon: Home, label: "Dashboard", href: "/dashboard", section: "Main" },
     { icon: MessageCircle, label: "AI Chatbot", href: "/chatbot", badge: "New", section: "Main" },
     { icon: Microscope, label: "Reports", href: "/reports", section: "Health" },
@@ -64,14 +57,14 @@ export default function DashboardPage() {
     { icon: Users, label: "Family", href: "/family", section: "Health" },
     { icon: Brain, label: "Second Opinion", href: "/second-opinion", section: "Advanced" },
     { icon: FileText, label: "History", href: "/history", section: "Advanced" },
-  ]
+  ], [])
 
-  const stats = [
+  const stats = useMemo(() => [
     { title: "AI Consultations", value: "12", change: "+2.4%", trend: "up", icon: MessageCircle, color: "blue" },
     { title: "Reports Analyzed", value: "04", change: "+12.5%", trend: "up", icon: FileText, color: "purple" },
     { title: "Health Score", value: "94", change: "+5.2%", trend: "up", icon: Heart, color: "emerald" },
     { title: "Active Meds", value: "03", change: "On track", trend: "stable", icon: Pill, color: "amber" },
-  ]
+  ], [])
 
   const colorConfig: Record<string, { bg: string; text: string; gradient: string; light: string; ring: string }> = {
     blue: { bg: "bg-blue-50", text: "text-blue-600", gradient: "from-blue-500 to-cyan-500", light: "bg-blue-50/50", ring: "stroke-blue-500" },

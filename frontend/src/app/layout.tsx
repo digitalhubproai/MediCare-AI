@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${jakarta.variable} font-sans antialiased bg-white text-slate-900 min-h-screen selection:bg-blue-100 selection:text-blue-900`}>
-        {/* Subtle gradient background */}
+        {/* Subtle gradient background - optimized with CSS */}
         <div className="fixed inset-0 bg-gradient-to-br from-blue-50/30 via-white to-cyan-50/30 z-[-1] pointer-events-none" />
         <Providers>
           <AuthProvider>{children}</AuthProvider>
