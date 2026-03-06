@@ -1,5 +1,11 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
+import NextAuth, { NextAuthOptions, User } from "next-auth"
+import { JWT } from "next-auth/jwt"
 import CredentialsProvider from "next-auth/providers/credentials"
+
+// Extend NextAuth User type to include token
+interface ExtendedUser extends User {
+  token?: string
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -44,7 +50,7 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.full_name,
             token: user.token
-          }
+          } as ExtendedUser
         } catch (error: any) {
           console.error("Auth error:", error.message)
           throw new Error(error.message || "Authentication failed")
@@ -61,8 +67,8 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       if (user) {
-        token.id = user.id
-        token.token = user.token
+        token.id = (user as ExtendedUser).id
+        token.token = (user as ExtendedUser).token
       }
       if (trigger === "update" && session) {
         return { ...token, ...session }
