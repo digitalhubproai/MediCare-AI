@@ -1285,26 +1285,21 @@ This helps me provide safer guidance for you.`,
                   className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Header with Gradient */}
-                  <div className={`relative h-40 bg-gradient-to-r ${selectedBioDoctor.gradient} overflow-hidden`}>
-                    <div className="absolute inset-0 bg-black/10" />
-                    <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-                    <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-                    
-                    <button
-                      onClick={() => setSelectedBioDoctor(null)}
-                      className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-xl hover:bg-white/30 transition-all z-10"
-                    >
-                      <X className="w-5 h-5 text-white" />
-                    </button>
-                  </div>
-
                   {/* Content */}
-                  <div className="px-8 pb-8">
+                  <div className="px-8 pb-8 pt-6">
                     {/* Avatar & Basic Info */}
-                    <div className="flex flex-col items-center text-center -mt-20 mb-6">
-                      <div className={`w-36 h-36 rounded-2xl bg-white p-1.5 shadow-2xl mb-4`}>
-                        <div className={`w-full h-full rounded-xl bg-gradient-to-br ${selectedBioDoctor.gradient} overflow-hidden`}>
+                    <div className="flex flex-col items-center text-center mb-6 relative">
+                      {/* Close Button - Absolute positioned */}
+                      <button
+                        onClick={() => setSelectedBioDoctor(null)}
+                        className="absolute top-0 right-0 p-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all z-10"
+                      >
+                        <X className="w-5 h-5 text-slate-600" />
+                      </button>
+
+                      {/* Avatar */}
+                      <div className={`w-32 h-32 rounded-2xl mb-4 shadow-xl overflow-hidden`}>
+                        <div className={`w-full h-full bg-gradient-to-br ${selectedBioDoctor.gradient}`}>
                           {selectedBioDoctor.image ? (
                             <img
                               src={selectedBioDoctor.image}
@@ -1324,7 +1319,7 @@ This helps me provide safer guidance for you.`,
                         {selectedBioDoctor.specialization}
                       </p>
                       
-                      <div className="flex items-center gap-4 mb-3">
+                      <div className="flex items-center gap-3 mb-3 flex-wrap justify-center">
                         <div className="flex items-center gap-1 px-3 py-1.5 bg-amber-50 rounded-xl">
                           <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
                           <span className="font-semibold text-amber-700">{selectedBioDoctor.rating}</span>
