@@ -730,7 +730,7 @@ const symptomSpecialistMap: Record<string, string> = {
   
   // Endocrinologist
   "diabetes": "endocrinologist", "thyroid": "endocrinologist", "hormone": "endocrinologist",
-  "insulin": "endocrinologist", "pcos": "endocrinologist", "osteoporosis": "endocrinologist",
+  "insulin": "endocrinologist", "osteoporosis": "endocrinologist",
   
   // Pulmonologist
   "asthma": "pulmonologist", "copd": "pulmonologist", "pneumonia": "pulmonologist",
