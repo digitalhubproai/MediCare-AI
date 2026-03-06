@@ -494,7 +494,7 @@ This helps me provide safer guidance for you.`,
     if (!content.trim() && !attachedFile) return
 
     let messageContent = content
-    let attachmentData = undefined
+    let attachmentData: { type: "image" | "file"; name: string } | undefined = undefined
 
     // Handle file attachment
     if (attachedFile) {
