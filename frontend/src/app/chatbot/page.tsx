@@ -29,7 +29,7 @@ interface Message {
 }
 
 // Medical Report Analysis Card Component
-function AnalysisCard({ content }: { content: string }) {
+function AnalysisCard({ content, onConsult }: { content: string; onConsult?: () => void }) {
   const lines = content.split('\n')
   
   // Extract different sections
@@ -187,7 +187,7 @@ function AnalysisCard({ content }: { content: string }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          onClick={() => router.push("/ai-doctors?fromReport=true")}
+          onClick={onConsult}
           className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
         >
           <UserRound className="h-5 w-5" />
@@ -812,7 +812,7 @@ export default function ChatbotPage() {
 
                       {/* Analysis Card or Regular Text */}
                       {message.isAnalysis || message.content.includes('📋 **Medical Report Analysis**') ? (
-                        <AnalysisCard content={message.content} />
+                        <AnalysisCard content={message.content} onConsult={() => router.push("/ai-doctors?fromReport=true")} />
                       ) : (
                         <div className={`text-sm leading-relaxed ${isUser ? "text-white/95" : "text-slate-700"}`}>
                           {!isUser ? (
