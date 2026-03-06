@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
+import { useSession, Session } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
 import { animate, stagger } from "animejs"
 import Logo from "@/components/Logo"
@@ -14,6 +14,13 @@ import {
   Stethoscope, Activity, AlertCircle, CheckCircle2, Clock, User, Star, Heart, TrendingUp,
   UserRound, HeartPulse
 } from "lucide-react"
+
+// Extend NextAuth Session type to include user.id
+interface ExtendedSession extends Session {
+  user: Session["user"] & {
+    id: string
+  }
+}
 
 interface Message {
   role: "user" | "assistant"
@@ -400,7 +407,7 @@ export default function ChatbotPage() {
     try {
       // Get user from session
       const userEmail = session?.user?.email || "guest@example.com"
-      const userId = session?.user?.id || userEmail
+      const userId = (session as ExtendedSession)?.user?.id || userEmail
 
       // Check if user uploaded a medical report image
       let assistantContent = ""
