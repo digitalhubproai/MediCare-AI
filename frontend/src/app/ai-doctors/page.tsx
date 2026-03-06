@@ -32,6 +32,7 @@ interface AIDoctor {
   name: string
   specialization: string
   avatar: string
+  image?: string
   color: string
   gradient: string
   description: string
@@ -48,6 +49,7 @@ const aiDoctors: AIDoctor[] = [
     name: "Dr. Sarah Mitchell",
     specialization: "General Physician",
     avatar: "SM",
+    image: "https://ui-avatars.com/api/?name=Sarah+Mitchell&size=256&background=3b82f6&color=fff&bold=true",
     color: "blue",
     gradient: "from-blue-600 to-cyan-500",
     description: "Primary care and general health concerns",
@@ -77,6 +79,7 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     name: "Dr. James Chen",
     specialization: "Cardiologist",
     avatar: "JC",
+    image: "https://ui-avatars.com/api/?name=James+Chen&size=256&background=e11d48&color=fff&bold=true",
     color: "rose",
     gradient: "from-rose-600 to-red-500",
     description: "Heart and cardiovascular health",
@@ -101,6 +104,7 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     name: "Dr. Emily Rodriguez",
     specialization: "Dermatologist",
     avatar: "ER",
+    image: "https://ui-avatars.com/api/?name=Emily+Rodriguez&size=256&background=9333ea&color=fff&bold=true",
     color: "purple",
     gradient: "from-purple-600 to-pink-500",
     description: "Skin, hair, and nail conditions",
@@ -123,6 +127,7 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     name: "Dr. Michael Thompson",
     specialization: "Pediatrician",
     avatar: "MT",
+    image: "https://ui-avatars.com/api/?name=Michael+Thompson&size=256&background=f59e0b&color=fff&bold=true",
     color: "amber",
     gradient: "from-amber-500 to-orange-500",
     description: "Child and infant healthcare",
@@ -147,6 +152,7 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     name: "Dr. Priya Sharma",
     specialization: "Gynecologist",
     avatar: "PS",
+    image: "https://ui-avatars.com/api/?name=Priya+Sharma&size=256&background=db2777&color=fff&bold=true",
     color: "pink",
     gradient: "from-pink-600 to-rose-500",
     description: "Women's reproductive health",
@@ -169,6 +175,7 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     name: "Dr. Robert Williams",
     specialization: "Orthopedic Surgeon",
     avatar: "RW",
+    image: "https://ui-avatars.com/api/?name=Robert+Williams&size=256&background=059669&color=fff&bold=true",
     color: "emerald",
     gradient: "from-emerald-600 to-teal-500",
     description: "Bones, joints, and muscles",
@@ -628,8 +635,16 @@ This helps me provide safer guidance for you.`,
                 
                 {/* Doctor Avatar */}
                 <div className="flex items-start gap-4 mb-4">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${doctor.gradient} flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform`}>
-                    <span className="text-white font-bold text-lg">{doctor.avatar}</span>
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${doctor.gradient} flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform overflow-hidden`}>
+                    {doctor.image ? (
+                      <img 
+                        src={doctor.image} 
+                        alt={doctor.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-white font-bold text-lg">{doctor.avatar}</span>
+                    )}
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-slate-900 text-lg">{doctor.name}</h3>
@@ -710,8 +725,16 @@ This helps me provide safer guidance for you.`,
 
           {selectedDoctor && (
             <div className="flex items-center gap-4">
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${selectedDoctor.gradient} flex items-center justify-center shadow-lg shadow-blue-500/30`}>
-                <span className="text-white font-bold text-lg">{selectedDoctor.avatar}</span>
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${selectedDoctor.gradient} flex items-center justify-center shadow-lg shadow-blue-500/30 overflow-hidden`}>
+                {selectedDoctor.image ? (
+                  <img 
+                    src={selectedDoctor.image} 
+                    alt={selectedDoctor.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-white font-bold text-lg">{selectedDoctor.avatar}</span>
+                )}
               </div>
               <div>
                 <div className="flex items-center gap-2">
