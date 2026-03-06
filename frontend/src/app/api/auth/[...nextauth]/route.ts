@@ -1,10 +1,17 @@
-import NextAuth, { NextAuthOptions, User } from "next-auth"
+import NextAuth, { NextAuthOptions, User, Session } from "next-auth"
 import { JWT } from "next-auth/jwt"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 // Extend NextAuth User type to include token
 interface ExtendedUser extends User {
   token?: string
+}
+
+// Extend NextAuth Session type to include id
+interface ExtendedSession extends Session {
+  user: Session["user"] & {
+    id: string
+  }
 }
 
 export const authOptions: NextAuthOptions = {
@@ -77,7 +84,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string
+        (session as ExtendedSession).user.id = token.id as string
       }
       return session
     },
