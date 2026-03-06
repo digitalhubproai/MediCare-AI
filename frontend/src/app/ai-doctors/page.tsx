@@ -55,7 +55,7 @@ const aiDoctors: AIDoctor[] = [
     avatar: "SM",
     image: "https://ui-avatars.com/api/?name=Sarah+Mitchell&size=256&background=3b82f6&color=fff&bold=true",
     color: "blue",
-    gradient: "from-blue-600 to-cyan-500",
+    gradient: "from-blue-500 to-blue-600",
     description: "Primary care and general health concerns",
     experience: "15+ years",
     rating: 4.9,
@@ -1286,25 +1286,25 @@ This helps me provide safer guidance for you.`,
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Header with Gradient */}
-                  <div className={`relative h-32 bg-gradient-to-r ${selectedBioDoctor.gradient} overflow-hidden`}>
+                  <div className={`relative h-40 bg-gradient-to-r ${selectedBioDoctor.gradient} overflow-hidden`}>
                     <div className="absolute inset-0 bg-black/10" />
-                    <div className="absolute -bottom-16 -right-16 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
-                    <div className="absolute -top-16 -left-16 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
+                    <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+                    <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
                     
                     <button
                       onClick={() => setSelectedBioDoctor(null)}
-                      className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-xl hover:bg-white/30 transition-all"
+                      className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-xl hover:bg-white/30 transition-all z-10"
                     >
                       <X className="w-5 h-5 text-white" />
                     </button>
                   </div>
 
                   {/* Content */}
-                  <div className="px-8 pb-8 -mt-16">
+                  <div className="px-8 pb-8">
                     {/* Avatar & Basic Info */}
-                    <div className="flex items-end gap-5 mb-6">
-                      <div className={`w-32 h-32 rounded-2xl bg-gradient-to-br ${selectedBioDoctor.gradient} p-1 shadow-xl`}>
-                        <div className="w-full h-full rounded-xl bg-white overflow-hidden">
+                    <div className="flex flex-col items-center text-center -mt-20 mb-6">
+                      <div className={`w-36 h-36 rounded-2xl bg-white p-1.5 shadow-2xl mb-4`}>
+                        <div className={`w-full h-full rounded-xl bg-gradient-to-br ${selectedBioDoctor.gradient} overflow-hidden`}>
                           {selectedBioDoctor.image ? (
                             <img
                               src={selectedBioDoctor.image}
@@ -1312,56 +1312,63 @@ This helps me provide safer guidance for you.`,
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <span className="w-full h-full flex items-center justify-center text-3xl font-bold text-slate-700">
+                            <span className="w-full h-full flex items-center justify-center text-4xl font-bold text-white">
                               {selectedBioDoctor.avatar}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="flex-1 pb-2">
-                        <h2 className="text-2xl font-bold text-slate-900">{selectedBioDoctor.name}</h2>
-                        <p className={`text-sm font-semibold bg-gradient-to-r ${selectedBioDoctor.gradient} bg-clip-text text-transparent`}>
-                          {selectedBioDoctor.specialization}
-                        </p>
-                        <div className="flex items-center gap-3 mt-2">
-                          <div className="flex items-center gap-1 px-2 py-1 bg-amber-50 rounded-lg">
-                            <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                            <span className="font-semibold text-amber-700">{selectedBioDoctor.rating}</span>
-                          </div>
-                          <span className="text-slate-300">•</span>
-                          <span className="text-sm text-slate-600">{selectedBioDoctor.experience}</span>
-                          <span className="text-slate-300">•</span>
-                          <span className="text-sm text-slate-600">{(selectedBioDoctor.consultations/1000).toFixed(1)}k patients</span>
+                      
+                      <h2 className="text-2xl font-bold text-slate-900 mb-1">{selectedBioDoctor.name}</h2>
+                      <p className={`text-sm font-semibold bg-gradient-to-r ${selectedBioDoctor.gradient} bg-clip-text text-transparent mb-3`}>
+                        {selectedBioDoctor.specialization}
+                      </p>
+                      
+                      <div className="flex items-center gap-4 mb-3">
+                        <div className="flex items-center gap-1 px-3 py-1.5 bg-amber-50 rounded-xl">
+                          <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                          <span className="font-semibold text-amber-700">{selectedBioDoctor.rating}</span>
                         </div>
+                        <div className="flex items-center gap-1 px-3 py-1.5 bg-slate-100 rounded-xl">
+                          <Clock className="w-4 h-4 text-slate-500" />
+                          <span className="font-semibold text-slate-700">{selectedBioDoctor.experience}</span>
+                        </div>
+                        <div className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 rounded-xl">
+                          <User className="w-4 h-4 text-blue-500" />
+                          <span className="font-semibold text-slate-700">{(selectedBioDoctor.consultations/1000).toFixed(1)}k</span>
+                        </div>
+                      </div>
+
+                      {/* Online Status */}
+                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full">
+                        <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
+                        <span className="text-sm font-medium text-green-700">{selectedBioDoctor.availability}</span>
                       </div>
                     </div>
 
-                    {/* Online Status */}
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full mb-6">
-                      <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
-                      <span className="text-sm font-medium text-green-700">{selectedBioDoctor.availability}</span>
-                    </div>
+                    {/* Divider */}
+                    <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent mb-6" />
 
                     {/* Bio Section */}
                     <div className="mb-6">
                       <h3 className="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider flex items-center gap-2">
-                        <div className="w-1 h-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" />
+                        <div className={`w-1 h-4 bg-gradient-to-r ${selectedBioDoctor.gradient} rounded-full`} />
                         About
                       </h3>
-                      <p className="text-slate-600 leading-relaxed text-sm">{selectedBioDoctor.bio}</p>
+                      <p className="text-slate-600 leading-relaxed text-sm text-left">{selectedBioDoctor.bio}</p>
                     </div>
 
                     {/* Qualifications */}
                     <div className="mb-6">
                       <h3 className="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider flex items-center gap-2">
-                        <div className="w-1 h-4 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" />
+                        <div className={`w-1 h-4 bg-gradient-to-r ${selectedBioDoctor.gradient} rounded-full`} />
                         Qualifications
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedBioDoctor.qualifications.map((qual, idx) => (
                           <span
                             key={idx}
-                            className="px-4 py-2 bg-gradient-to-r from-slate-50 to-slate-100 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:border-slate-300 transition-colors"
+                            className={`px-4 py-2 bg-gradient-to-r ${selectedBioDoctor.gradient} bg-opacity-10 rounded-xl text-sm font-semibold text-white`}
                           >
                             {qual}
                           </span>
@@ -1372,7 +1379,7 @@ This helps me provide safer guidance for you.`,
                     {/* Languages */}
                     <div className="mb-8">
                       <h3 className="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider flex items-center gap-2">
-                        <div className="w-1 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
+                        <div className={`w-1 h-4 bg-gradient-to-r ${selectedBioDoctor.gradient} rounded-full`} />
                         Languages
                       </h3>
                       <div className="flex flex-wrap gap-2">
