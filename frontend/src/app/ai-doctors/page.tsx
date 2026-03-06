@@ -41,6 +41,10 @@ interface AIDoctor {
   consultations: number
   systemPrompt: string
   gender: 'male' | 'female'
+  bio: string
+  qualifications: string[]
+  languages: string[]
+  availability: string
 }
 
 const aiDoctors: AIDoctor[] = [
@@ -57,6 +61,10 @@ const aiDoctors: AIDoctor[] = [
     rating: 4.9,
     consultations: 12500,
     gender: 'female',
+    bio: "Dr. Sarah Mitchell is a compassionate General Physician dedicated to providing comprehensive primary care. She believes in a holistic approach to medicine, treating not just symptoms but the whole person. Her warm bedside manner and thorough diagnostic skills have made her a trusted healthcare provider for thousands of families.",
+    qualifications: ["MBBS", "MD Internal Medicine", "Board Certified"],
+    languages: ["English", "Spanish", "French"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Sarah Mitchell, a compassionate General Physician.
 
 **CONSULTATION FLOW:**
@@ -87,6 +95,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 5.0,
     consultations: 8900,
     gender: 'male',
+    bio: "Dr. James Chen is a renowned Cardiologist with over two decades of experience in cardiovascular medicine. He specializes in preventive cardiology and complex cardiac interventions. His patient-centered approach combines cutting-edge medical knowledge with compassionate care.",
+    qualifications: ["MD Cardiology", "FACC", "Interventional Cardiology Fellowship"],
+    languages: ["English", "Mandarin", "Cantonese"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. James Chen, Cardiologist with 20+ years experience.
 
 **EXPERTISE:** Chest pain, palpitations, high BP, heart disease
@@ -112,6 +124,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.95,
     consultations: 15200,
     gender: 'female',
+    bio: "Dr. Emily Rodriguez is a board-certified Dermatologist specializing in medical and cosmetic dermatology. Her expertise includes treating complex skin conditions, acne management, and skin cancer screening. She is known for her gentle approach and innovative treatment plans.",
+    qualifications: ["MD Dermatology", "Board Certified", "Cosmetic Dermatology Fellowship"],
+    languages: ["English", "Spanish"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Emily Rodriguez, Dermatologist.
 
 **EXPERTISE:** Acne, rashes, eczema, hair loss, skin conditions
@@ -135,6 +151,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.98,
     consultations: 22000,
     gender: 'male',
+    bio: "Dr. Michael Thompson is a beloved Pediatrician with nearly two decades of experience caring for infants, children, and adolescents. He is passionate about preventive care, childhood development, and building trust with both young patients and their parents.",
+    qualifications: ["MD Pediatrics", "FAAP", "Pediatric Critical Care Fellowship"],
+    languages: ["English", "Spanish"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Michael Thompson, Pediatrician.
 
 **EXPERTISE:** Childhood illnesses, fever, vaccination, growth
@@ -160,6 +180,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.97,
     consultations: 11000,
     gender: 'female',
+    bio: "Dr. Priya Sharma is a compassionate Gynecologist dedicated to women's health across all life stages. Her expertise includes reproductive health, pregnancy care, and minimally invasive surgical techniques. She creates a safe, judgment-free environment for sensitive health discussions.",
+    qualifications: ["MD Obstetrics & Gynecology", "Board Certified", "Minimally Invasive Surgery Fellowship"],
+    languages: ["English", "Hindi", "Gujarati"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Priya Sharma, Gynecologist.
 
 **EXPERTISE:** Menstrual disorders, PCOS, pregnancy, contraception
@@ -183,6 +207,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.92,
     consultations: 9500,
     gender: 'male',
+    bio: "Dr. Robert Williams is a distinguished Orthopedic Surgeon specializing in sports medicine, joint replacement, and trauma surgery. His patient-focused approach emphasizes both surgical excellence and comprehensive rehabilitation for optimal recovery.",
+    qualifications: ["MD Orthopedic Surgery", "Board Certified", "Sports Medicine Fellowship"],
+    languages: ["English"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Robert Williams, Orthopedic Surgeon.
 
 **EXPERTISE:** Joint pain, fractures, sports injuries, back pain
@@ -208,6 +236,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.96,
     consultations: 8200,
     gender: 'female',
+    bio: "Dr. Lisa Park is a highly skilled Neurologist with expertise in diagnosing and treating complex neurological disorders. Her compassionate approach and thorough diagnostic methods have helped countless patients manage conditions ranging from migraines to Parkinson's disease.",
+    qualifications: ["MD Neurology", "Board Certified", "Stroke Fellowship"],
+    languages: ["English", "Korean", "Japanese"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Lisa Park, Neurologist with 17+ years experience.
 
 **EXPERTISE:** Headaches, migraines, seizures, stroke, neuropathy, Parkinson's, MS
@@ -233,6 +265,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.98,
     consultations: 18500,
     gender: 'male',
+    bio: "Dr. Marcus Johnson is a compassionate Psychiatrist dedicated to destigmatizing mental health care. His integrative approach combines evidence-based medication management with psychotherapy, helping patients achieve emotional wellness and resilience.",
+    qualifications: ["MD Psychiatry", "Board Certified", "Addiction Medicine Fellowship"],
+    languages: ["English", "Spanish"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Marcus Johnson, Psychiatrist.
 
 **EXPERTISE:** Depression, anxiety, bipolar, PTSD, OCD, sleep disorders
@@ -259,6 +295,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.94,
     consultations: 11200,
     gender: 'female',
+    bio: "Dr. Anita Patel is a skilled Gastroenterologist specializing in digestive disorders and liver diseases. Her patient-friendly approach and expertise in endoscopic procedures have made her a trusted name in gastrointestinal health.",
+    qualifications: ["MD Gastroenterology", "Board Certified", "Advanced Endoscopy Fellowship"],
+    languages: ["English", "Hindi", "Gujarati"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Anita Patel, Gastroenterologist.
 
 **EXPERTISE:** Acid reflux, IBS, IBD, liver disease, gallstones, digestive issues
@@ -284,6 +324,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.93,
     consultations: 14300,
     gender: 'male',
+    bio: "Dr. David Kim is an experienced Endocrinologist specializing in diabetes management, thyroid disorders, and hormonal imbalances. His comprehensive approach includes lifestyle modification, medication management, and patient education for optimal metabolic health.",
+    qualifications: ["MD Endocrinology", "Board Certified", "Diabetes & Metabolism Fellowship"],
+    languages: ["English", "Korean"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. David Kim, Endocrinologist.
 
 **EXPERTISE:** Diabetes, thyroid disorders, PCOS, hormonal imbalances, osteoporosis
@@ -309,6 +353,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.95,
     consultations: 9800,
     gender: 'female',
+    bio: "Dr. Rachel Green is a dedicated Pulmonologist with expertise in respiratory diseases, critical care, and sleep medicine. Her calm demeanor and thorough approach help patients manage conditions from asthma to COPD effectively.",
+    qualifications: ["MD Pulmonology", "Board Certified", "Critical Care Medicine Fellowship"],
+    languages: ["English"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Rachel Green, Pulmonologist.
 
 **EXPERTISE:** Asthma, COPD, pneumonia, breathing difficulties, sleep apnea
@@ -334,6 +382,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.91,
     consultations: 7600,
     gender: 'male',
+    bio: "Dr. Thomas Anderson is a seasoned Nephrologist specializing in kidney disease management, dialysis care, and transplantation. His methodical approach and patient education focus help individuals maintain optimal kidney health.",
+    qualifications: ["MD Nephrology", "Board Certified", "Transplant Nephrology Fellowship"],
+    languages: ["English"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Thomas Anderson, Nephrologist.
 
 **EXPERTISE:** Kidney disease, kidney stones, dialysis, hypertension, electrolyte disorders
@@ -359,6 +411,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.94,
     consultations: 8900,
     gender: 'female',
+    bio: "Dr. Jennifer Martinez is a compassionate Urologist specializing in urinary tract disorders, kidney stones, and men's health. Her discreet, patient-centered approach makes discussing sensitive urological issues comfortable and judgment-free.",
+    qualifications: ["MD Urology", "Board Certified", "Female Urology Fellowship"],
+    languages: ["English", "Spanish"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Jennifer Martinez, Urologist.
 
 **EXPERTISE:** UTIs, kidney stones, prostate issues, incontinence, male health
@@ -384,6 +440,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.97,
     consultations: 6500,
     gender: 'male',
+    bio: "Dr. Steven Wright is a distinguished Oncologist with over two decades of experience in cancer care. His compassionate approach combines cutting-edge treatments with supportive care, helping patients navigate their cancer journey with hope and dignity.",
+    qualifications: ["MD Medical Oncology", "Board Certified", "Hematology-Oncology Fellowship"],
+    languages: ["English"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Steven Wright, Oncologist.
 
 **EXPERTISE:** Cancer diagnosis, chemotherapy, radiation, immunotherapy, palliative care
@@ -409,6 +469,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.93,
     consultations: 7200,
     gender: 'female',
+    bio: "Dr. Michelle Lee is a dedicated Rheumatologist specializing in autoimmune diseases, arthritis, and chronic pain management. Her empathetic approach and focus on quality of life help patients manage complex rheumatic conditions effectively.",
+    qualifications: ["MD Rheumatology", "Board Certified", "Clinical Immunology Fellowship"],
+    languages: ["English", "Korean"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Michelle Lee, Rheumatologist.
 
 **EXPERTISE:** Rheumatoid arthritis, lupus, fibromyalgia, gout, autoimmune disorders
@@ -434,6 +498,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.92,
     consultations: 13400,
     gender: 'male',
+    bio: "Dr. Brian Taylor is a friendly ENT specialist with extensive experience in treating ear, nose, and throat conditions. His approachable manner and expertise in both medical and surgical treatments make him a trusted choice for ENT care.",
+    qualifications: ["MD Otolaryngology", "Board Certified", "Head & Neck Surgery Fellowship"],
+    languages: ["English"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Brian Taylor, ENT (Otolaryngologist).
 
 **EXPERTISE:** Hearing loss, sinus infections, tonsillitis, vertigo, snoring, voice issues
@@ -459,6 +527,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.96,
     consultations: 16800,
     gender: 'female',
+    bio: "Dr. Sophia Chen is a skilled Ophthalmologist specializing in comprehensive eye care, cataract surgery, and glaucoma management. Her gentle approach and advanced surgical techniques help patients maintain and restore their vision.",
+    qualifications: ["MD Ophthalmology", "Board Certified", "Cornea & Refractive Surgery Fellowship"],
+    languages: ["English", "Mandarin"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Sophia Chen, Ophthalmologist.
 
 **EXPERTISE:** Cataracts, glaucoma, macular degeneration, diabetic retinopathy, dry eyes
@@ -484,6 +556,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.94,
     consultations: 10500,
     gender: 'male',
+    bio: "Dr. Kevin Brown is a knowledgeable Allergist & Immunologist specializing in allergic diseases, asthma, and immune disorders. His thorough approach to identifying triggers and creating personalized treatment plans helps patients live allergy-free.",
+    qualifications: ["MD Allergy & Immunology", "Board Certified", "Pediatric Allergy Fellowship"],
+    languages: ["English"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Kevin Brown, Allergist & Immunologist.
 
 **EXPERTISE:** Food allergies, seasonal allergies, eczema, asthma, immune deficiencies
@@ -509,6 +585,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.97,
     consultations: 19200,
     gender: 'female',
+    bio: "Dr. Amanda White is a passionate Clinical Dietitian specializing in medical nutrition therapy, weight management, and sports nutrition. Her practical, non-judgmental approach helps patients develop sustainable, healthy eating habits for life.",
+    qualifications: ["PhD Nutrition Science", "Registered Dietitian (RD)", "Certified Diabetes Educator"],
+    languages: ["English", "Spanish"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Amanda White, Clinical Dietitian.
 
 **EXPERTISE:** Weight management, diabetic diet, heart-healthy eating, sports nutrition, eating disorders
@@ -534,6 +614,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.95,
     consultations: 14700,
     gender: 'male',
+    bio: "Dr. Chris Evans is an energetic Physiotherapist specializing in sports rehabilitation, orthopedic recovery, and chronic pain management. His motivational approach and personalized exercise programs help patients regain strength and mobility.",
+    qualifications: ["DPT (Doctor of Physical Therapy)", "Board Certified", "Sports Physical Therapy Specialist"],
+    languages: ["English"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Chris Evans, Physiotherapist.
 
 **EXPERTISE:** Injury rehabilitation, post-surgery recovery, chronic pain, sports injuries, mobility
@@ -559,6 +643,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.93,
     consultations: 21000,
     gender: 'female',
+    bio: "Dr. Laura Garcia is a gentle Dentist specializing in comprehensive dental care, cosmetic dentistry, and preventive treatments. Her calming approach helps patients overcome dental anxiety while maintaining optimal oral health.",
+    qualifications: ["DDS (Doctor of Dental Surgery)", "Board Certified", "Cosmetic Dentistry Fellowship"],
+    languages: ["English", "Spanish"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Laura Garcia, Dentist.
 
 **EXPERTISE:** Tooth decay, gum disease, toothache, oral hygiene, cosmetic dentistry
@@ -584,6 +672,10 @@ Always include: "⚠️ Consult your healthcare provider before starting any med
     rating: 4.99,
     consultations: 5400,
     gender: 'male',
+    bio: "Dr. Hassan Ali is a world-renowned Interventional Cardiologist with over 25 years of experience in complex cardiac procedures. His expertise in angioplasty, stenting, and structural heart disease has saved countless lives. He combines technical excellence with compassionate patient care.",
+    qualifications: ["MD Cardiology", "FACC", "Interventional Cardiology Fellowship", "Complex PCI Specialist"],
+    languages: ["English", "Urdu", "Arabic"],
+    availability: "Available 24/7",
     systemPrompt: `You are Dr. Hassan Ali, Interventional Cardiologist.
 
 **EXPERTISE:** Angioplasty, stents, heart attacks, complex coronary disease
@@ -749,6 +841,7 @@ function AIDoctorsContent() {
   const [recognition, setRecognition] = useState<any>(null)
   const [speechSynth, setSpeechSynth] = useState<SpeechSynthesis | null>(null)
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
+  const [selectedBioDoctor, setSelectedBioDoctor] = useState<AIDoctor | null>(null)
 
   useEffect(() => {
     scrollToBottom()
@@ -1079,63 +1172,242 @@ This helps me provide safer guidance for you.`,
             {aiDoctors.map((doctor, index) => (
               <motion.div
                 key={doctor.id}
-                className="doctor-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group overflow-hidden relative"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                whileHover={{ y: -8, scale: 1.02, boxShadow: "0 20px 60px -10px rgba(59, 130, 246, 0.3)" }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ delay: index * 0.1 }}
-                onClick={() => connectToDoctor(doctor)}
-                tabIndex={0}
-                onKeyDown={(e) => e.key === "Enter" && connectToDoctor(doctor)}
+                className={`doctor-card relative overflow-hidden rounded-3xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 group`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
               >
-                {/* Gradient orb decoration */}
-                <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${doctor.gradient} opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity`} />
-                
-                {/* Doctor Avatar */}
-                <div className="flex items-start gap-4 mb-4">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${doctor.gradient} flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform overflow-hidden`}>
-                    {doctor.image ? (
-                      <img 
-                        src={doctor.image} 
-                        alt={doctor.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-white font-bold text-lg">{doctor.avatar}</span>
-                    )}
+                {/* Colorful Header with Gradient */}
+                <div className={`h-32 bg-gradient-to-br ${doctor.gradient} relative overflow-hidden`}>
+                  <div className="absolute inset-0 bg-black/10" />
+                  <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
+                  <div className="absolute -top-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
+                  
+                  {/* Availability Badge */}
+                  <div className="absolute top-3 right-3 px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full">
+                    <span className="text-xs font-semibold text-white flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                      {doctor.availability}
+                    </span>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-slate-900 text-lg">{doctor.name}</h3>
-                    <p className={`text-sm font-semibold bg-gradient-to-r ${doctor.gradient} bg-clip-text text-transparent`}>
-                      {doctor.specialization}
-                    </p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                      <span className="text-sm font-semibold text-slate-700">{doctor.rating}</span>
-                      <span className="text-xs text-slate-400">•</span>
-                      <span className="text-xs text-slate-500">{(doctor.consultations/1000).toFixed(1)}k consultations</span>
+                </div>
+
+                {/* Avatar - Overlapping Header */}
+                <div className="relative px-6 -mt-16">
+                  <div className={`w-32 h-32 mx-auto rounded-2xl bg-gradient-to-br ${doctor.gradient} p-1 shadow-xl group-hover:scale-105 transition-transform duration-300`}>
+                    <div className="w-full h-full rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                      {doctor.image ? (
+                        <img
+                          src={doctor.image}
+                          alt={doctor.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-4xl font-bold text-slate-700">{doctor.avatar}</span>
+                      )}
                     </div>
                   </div>
                 </div>
 
-                {/* Description */}
-                <p className="text-sm text-slate-600 mb-4">{doctor.description}</p>
+                {/* Doctor Info */}
+                <div className="px-6 pt-4 pb-6">
+                  <div className="text-center mb-4">
+                    <h3 className="font-bold text-xl text-slate-900 mb-1">{doctor.name}</h3>
+                    <p className={`text-sm font-semibold bg-gradient-to-r ${doctor.gradient} bg-clip-text text-transparent`}>
+                      {doctor.specialization}
+                    </p>
+                  </div>
 
-                {/* Experience Badge */}
-                <div className="flex items-center gap-2 text-xs text-slate-500 mb-4">
-                  <Clock className="w-4 h-4" />
-                  <span>{doctor.experience} experience</span>
+                  {/* Stats Row */}
+                  <div className="flex items-center justify-center gap-4 mb-4 pb-4 border-b border-slate-100">
+                    <div className="text-center">
+                      <div className="flex items-center gap-1">
+                        <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                        <span className="font-bold text-slate-900">{doctor.rating}</span>
+                      </div>
+                      <span className="text-xs text-slate-500">Rating</span>
+                    </div>
+                    <div className="w-px h-8 bg-slate-200" />
+                    <div className="text-center">
+                      <span className="font-bold text-slate-900">{doctor.experience}</span>
+                      <span className="text-xs text-slate-500 block">Experience</span>
+                    </div>
+                    <div className="w-px h-8 bg-slate-200" />
+                    <div className="text-center">
+                      <span className="font-bold text-slate-900">{(doctor.consultations/1000).toFixed(1)}k</span>
+                      <span className="text-xs text-slate-500 block">Consults</span>
+                    </div>
+                  </div>
+
+                  {/* Languages */}
+                  <div className="flex items-center justify-center gap-2 mb-4 flex-wrap">
+                    {doctor.languages.map((lang, idx) => (
+                      <span key={idx} className="px-2 py-1 bg-slate-100 rounded-md text-xs font-medium text-slate-600">
+                        {lang}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Bio Preview */}
+                  <p className="text-sm text-slate-600 mb-4 line-clamp-2">{doctor.bio}</p>
+
+                  {/* Qualifications */}
+                  <div className="flex items-center justify-center gap-2 mb-4 flex-wrap">
+                    {doctor.qualifications.slice(0, 2).map((qual, idx) => (
+                      <span key={idx} className={`px-2 py-1 bg-gradient-to-r ${doctor.gradient} bg-opacity-10 rounded-md text-xs font-semibold text-white`}>
+                        {qual}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setSelectedBioDoctor(doctor)}
+                      className="flex-1 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                    >
+                      <FileText className="w-4 h-4" />
+                      View Profile
+                    </button>
+                    <button
+                      onClick={() => connectToDoctor(doctor)}
+                      className={`flex-[2] py-2.5 rounded-xl bg-gradient-to-r ${doctor.gradient} text-white font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2`}
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      Consult Now
+                    </button>
+                  </div>
                 </div>
-
-                {/* Action Button */}
-                <button className={`w-full py-3 rounded-xl bg-gradient-to-r ${doctor.gradient} text-white font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group-hover:shadow-2xl`}>
-                  <MessageCircle className="w-5 h-5" />
-                  Start Consultation
-                </button>
               </motion.div>
             ))}
           </div>
+
+          {/* Doctor Bio Modal */}
+          <AnimatePresence>
+            {selectedBioDoctor && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                onClick={() => setSelectedBioDoctor(null)}
+              >
+                <motion.div
+                  initial={{ scale: 0.9, y: 20 }}
+                  animate={{ scale: 1, y: 0 }}
+                  exit={{ scale: 0.9, y: 20 }}
+                  className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Modal Header with Gradient */}
+                  <div className={`h-48 bg-gradient-to-br ${selectedBioDoctor.gradient} relative overflow-hidden`}>
+                    <div className="absolute inset-0 bg-black/10" />
+                    <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+                    <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+                    
+                    <button
+                      onClick={() => setSelectedBioDoctor(null)}
+                      className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-all"
+                    >
+                      <X className="w-6 h-6 text-white" />
+                    </button>
+                  </div>
+
+                  {/* Avatar */}
+                  <div className="relative px-8 -mt-20">
+                    <div className={`w-40 h-40 mx-auto rounded-2xl bg-gradient-to-br ${selectedBioDoctor.gradient} p-2 shadow-2xl`}>
+                      <div className="w-full h-full rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                        {selectedBioDoctor.image ? (
+                          <img
+                            src={selectedBioDoctor.image}
+                            alt={selectedBioDoctor.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-5xl font-bold text-slate-700">{selectedBioDoctor.avatar}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Doctor Info */}
+                  <div className="px-8 pb-8">
+                    <div className="text-center mb-6">
+                      <h2 className="text-3xl font-bold text-slate-900 mb-2">{selectedBioDoctor.name}</h2>
+                      <p className={`text-lg font-semibold bg-gradient-to-r ${selectedBioDoctor.gradient} bg-clip-text text-transparent`}>
+                        {selectedBioDoctor.specialization}
+                      </p>
+                      <div className="flex items-center justify-center gap-4 mt-3">
+                        <div className="flex items-center gap-1">
+                          <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+                          <span className="font-bold text-slate-900">{selectedBioDoctor.rating}</span>
+                          <span className="text-slate-500">({(selectedBioDoctor.consultations/1000).toFixed(1)}k reviews)</span>
+                        </div>
+                        <span className="text-slate-300">|</span>
+                        <span className="text-slate-600">{selectedBioDoctor.experience}</span>
+                        <span className="text-slate-300">|</span>
+                        <span className="flex items-center gap-1 text-green-600 font-semibold">
+                          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                          {selectedBioDoctor.availability}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Full Bio */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <FileText className="w-5 h-5 text-blue-600" />
+                        About Dr. {selectedBioDoctor.name.split(' ')[1]}
+                      </h3>
+                      <p className="text-slate-600 leading-relaxed">{selectedBioDoctor.bio}</p>
+                    </div>
+
+                    {/* Qualifications */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                        Qualifications & Certifications
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedBioDoctor.qualifications.map((qual, idx) => (
+                          <span key={idx} className={`px-4 py-2 bg-gradient-to-r ${selectedBioDoctor.gradient} rounded-xl text-sm font-semibold text-white shadow-md`}>
+                            {qual}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Languages */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5 text-purple-600" />
+                        Languages Spoken
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedBioDoctor.languages.map((lang, idx) => (
+                          <span key={idx} className="px-4 py-2 bg-slate-100 rounded-xl text-sm font-medium text-slate-700">
+                            {lang}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Consult Button */}
+                    <button
+                      onClick={() => {
+                        setSelectedBioDoctor(null)
+                        connectToDoctor(selectedBioDoctor)
+                      }}
+                      className={`w-full py-4 rounded-2xl bg-gradient-to-r ${selectedBioDoctor.gradient} text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3`}
+                    >
+                      <MessageCircle className="w-6 h-6" />
+                      Start Consultation with Dr. {selectedBioDoctor.name.split(' ')[1]}
+                    </button>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Trust Badges */}
           <motion.div
