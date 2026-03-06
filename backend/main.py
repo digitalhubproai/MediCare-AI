@@ -24,15 +24,21 @@ app.include_router(health_router)
 @app.on_event("startup")
 async def startup_db():
     from models import Base, engine, SessionLocal
-    # Drop all existing tables first
-    Base.metadata.drop_all(bind=engine)
-    # Create fresh tables
-    Base.metadata.create_all(bind=engine)
-    
-    # Seed medicine interactions database
-    seed_medicine_interactions(SessionLocal())
-    
-    print("Database tables created successfully!")
+    try:
+        # Create tables if they don't exist (DO NOT drop existing tables)
+        Base.metadata.create_all(bind=engine)
+        
+        # Seed medicine interactions database
+        db = SessionLocal()
+        try:
+            seed_medicine_interactions(db)
+        finally:
+            db.close()
+        
+        print("Database tables created successfully!")
+    except Exception as e:
+        print(f"Database initialization error: {str(e)}")
+        # Don't crash the app on DB init failure
 
 
 # Seed medicine interactions
