@@ -614,7 +614,6 @@ This helps me provide safer guidance for you.`,
             {aiDoctors.map((doctor) => (
               <motion.div
                 key={doctor.id}
-                className="doctor-card"
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileHover={{ y: -8, scale: 1.02, boxShadow: "0 20px 60px -10px rgba(59, 130, 246, 0.3)" }}
                 whileTap={{ scale: 0.98 }}
