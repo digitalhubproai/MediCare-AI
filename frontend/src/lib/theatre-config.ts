@@ -81,22 +81,22 @@ export { project, uiSheet, heroAnimations, featureCards, statsSection, timeline 
 // Helper function for smooth animations
 export const animateValue = (element: HTMLElement, property: string, from: number, to: number, duration: number) => {
   const start = performance.now()
-  
+
   const animate = (time: number) => {
     const elapsed = time - start
     const progress = Math.min(elapsed / duration, 1)
-    
+
     // Ease out cubic
     const eased = 1 - Math.pow(1 - progress, 3)
-    
+
     const value = from + (to - from) * eased
-    element.style[property] = String(value)
-    
+    ;(element.style as any)[property] = String(value)
+
     if (progress < 1) {
       requestAnimationFrame(animate)
     }
   }
-  
+
   requestAnimationFrame(animate)
 }
 

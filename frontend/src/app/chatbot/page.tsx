@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useSession, Session } from "next-auth/react"
+import { useSession } from "next-auth/react"
+import { Session } from "next-auth"
 import { motion, AnimatePresence } from "framer-motion"
 import { animate, stagger } from "animejs"
 import Logo from "@/components/Logo"

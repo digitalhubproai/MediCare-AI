@@ -196,7 +196,9 @@ export default function DashboardPage() {
     )
   }
 
-  const MedicationProgress = ({ medications }: { medications: typeof medications }) => {
+  type MedicationType = typeof medications
+
+  const MedicationProgress = ({ medications }: { medications: MedicationType }) => {
     const taken = medications.filter(m => m.taken).length
     const progress = (taken / medications.length) * 100
 

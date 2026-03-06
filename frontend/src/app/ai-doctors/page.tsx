@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -242,7 +242,8 @@ const messageVariants = {
   }
 }
 
-export default function AIDoctorsPage() {
+// Inner component that uses useSearchParams
+function AIDoctorsContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { data: session } = useSession()
@@ -1132,5 +1133,20 @@ This helps me provide safer guidance for you.`,
         </>
       )}
     </div>
+  )
+}
+
+export default function AIDoctorsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <p className="text-slate-600 font-medium">Loading consultation...</p>
+        </div>
+      </div>
+    }>
+      <AIDoctorsContent />
+    </Suspense>
   )
 }

@@ -85,7 +85,7 @@ export default function EmergencyPage() {
   }
 
   const findHospitals = () => {
-    window.open(`https://www.google.com/maps/search/hospitals+near+me/@${navigator.geolocation.getCurrentPosition ? "" : "40.7128,-74.0060"}`, "_blank")
+    window.open(`https://www.google.com/maps/search/hospitals+near+me`, "_blank")
   }
 
   const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
